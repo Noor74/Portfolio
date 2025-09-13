@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Noor ul haq Abbasi — Portfolio</title>
   <link rel="icon" type="image/jpeg" href="assets/fevicon.jpg">
 
-<link rel="icon" type="image/jpeg" href="assets/fevicon.jpg">
+  <title>Noor ul haq Abbasi — Portfolio</title>
 
   <!-- Basic styling (self-contained, responsive) -->
   <style>
@@ -17,6 +16,9 @@
       --accent:#0f1724; /* dark */
       --accent-soft: #0b1220;
       --accent-2:#0ea5a4;
+	  --accent2:#0f8724; /* dark */
+      --accent2-soft: #0b1220;
+      --accent2-2:#0ec5f4;
       --radius:14px;
       --gap:20px;
       --container:1100px;
@@ -52,6 +54,15 @@
       color:white;font-weight:700;font-size:15px;
       box-shadow: 0 6px 18px rgba(11,17,31,0.08);
     }
+	
+	  .logo2{
+      width:165px;height:46px;border-radius:10px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent2-2) 0%, var(--accent) 100%);
+      color:white;font-weight:700;font-size:15px;
+      box-shadow: 0 6px 18px rgba(11,17,31,0.08);
+    }
+	
+	
     .brand h1{font-size:16px;margin:0}
     nav{display:flex;gap:14px;align-items:center}
     nav a{font-size:14px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--muted)}
@@ -236,15 +247,15 @@
 
     <!-- ABOUT -->
     <section id="about" class="section">
-      <div class="card">
-        <h3 style="margin-top:0">About</h3>
+      <div >
+        <h3 class="logo2" style="margin:0 0 12px 0">About</h3>
         <p style="color:var(--muted)">I’m a data analysis and automation specialist with an MBA in Marketing and an M.Sc. in Statistics. I deliver end-to-end Excel and Google Sheets solutions — from requirements and prototyping to development, testing and delivery. I’ve worked on large survey projects, transport modelling tools, and BI systems across the UAE, Qatar and Pakistan.</p>
       </div>
     </section>
 
     <!-- SPECIALISATIONS -->
     <section id="services" class="section">
-      <h3 style="margin:0 0 12px 0">Specialisations</h3>
+      <h3 class="logo2" style="margin:0 0 12px 0">Specialisations</h3>
       <div class="grid cols-3" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
         <div class="card">
           <h4 style="margin:0 0 8px 0">Custom Dashboards</h4>
@@ -265,7 +276,7 @@
 
     <!-- WORK -->
     <section id="work" class="section">
-      <h3 style="margin:0 0 12px 0">Selected projects</h3>
+      <h3 class="logo2" style="margin:0 0 12px 0">Selected projects</h3>
       <div class="blog-grid">
         <article class="card">
           <h4 style="margin:0 0 8px 0">Custom Excel Dashboard — Financial Reporting</h4>
@@ -291,7 +302,7 @@
 
     <!-- BLOG / INSIGHTS -->
     <section id="blog" class="section">
-      <h3 style="margin:0 0 12px 0">Blog & Resources</h3>
+      <h3 class="logo2" style="margin:0 0 12px 0">Blog & Resources</h3>
       <div class="grid cols-2" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
         <div class="card">
           <h4 style="margin:0 0 8px 0">How to build a robust Excel dashboard</h4>
@@ -305,11 +316,26 @@
           <a href="blog/Protecting data quality in surveys.html" class="small" style="text-decoration:none;color:var(--accent)">Read more →</a>
         </div>
       </div>
+	  
+	  <div class="grid cols-2" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+        <div class="card">
+          <h4 style="margin:0 0 8px 0">Top 7 Excel VBA Tricks Every Analyst Should Know</h4>
+          <p class="small" style="color:var(--muted)">Boost productivity and reliability with these essential VBA techniques.</p>
+          <a href="blog/Top 7 Excel VBA Tricks Every Analyst Should Know.html" class="small" style="text-decoration:none;color:var(--accent)">Read more →</a>
+        </div>
+
+        <div class="card">
+          <h4 style="margin:0 0 8px 0">Building Error-Proof Macros Best Practices for Reliable Automation</h4>
+          <p class="small" style="color:var(--muted)">Strategies to make your Excel macros resilient, maintainable, and user-friendly.</p>
+          <a href="blog/Building Error-Proof Macros Best Practices for Reliable Automation.html" class="small" style="text-decoration:none;color:var(--accent)">Read more →</a>
+        </div>
+      </div>
+	  
     </section>
 
     <!-- TESTIMONIALS -->
     <section id="testimonials" class="section">
-      <h3 style="margin:0 0 12px 0">Recommendations</h3>
+      <h3 class="logo2" style="margin:0 0 12px 0">Recommendations</h3>
       <div class="testimonials">
         <div class="card">
           <p style="margin:0 0 8px 0">“Noor was one of the most dedicated employees I have worked with. His data analysis ability and problem-solution analytics is world class.”</p>
@@ -331,7 +357,7 @@
     <!-- CONTACT -->
     <section id="contact" class="section">
       <div class="card">
-        <h3 style="margin-top:0">Let's work together</h3>
+        <h3 class="logo2" style="margin-top:0">Let's work together</h3>
         <p class="small" style="color:var(--muted)">I work with international clients on dashboards, automations and templates. Get in touch to discuss your project.</p>
 
         <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;align-items:center">
@@ -403,6 +429,3 @@
   </script>
 </body>
 </html>
-
-
-
