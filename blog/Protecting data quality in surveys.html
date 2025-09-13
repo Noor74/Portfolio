@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>How to build a robust Excel dashboard — Noor ul haq Abbasi</title>
+  <meta name="description" content="Proven steps and layout patterns for Excel dashboards that scale, survive audits, and remain maintainable." />
+  <style>
+    :root{
+      --bg:#fafbfd; --card:#fff; --muted:#6b7280; --accent:#0b1020; --radius:12px; --container:980px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:var(--bg); color:var(--accent); line-height:1.6}
+    .wrap{max-width:var(--container);margin:28px auto;padding:20px}
+
+    /* Header & nav */
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter: blur(6px);
+      background:rgba(255,255,255,0.9);
+      border-bottom:1px solid rgba(16,24,40,0.04);
+    }
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:var(--container);margin:0 auto;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:40px;height:40px;border-radius:8px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#0b1020,#0ea5a4);color:white;font-weight:700;font-size:14px;
+    }
+    .brand h1{font-size:16px;margin:0}
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{font-size:14px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--muted)}
+    nav a:hover{background:rgba(15,23,36,0.05);color:var(--accent)}
+    .cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600}
+    .menu-toggle{display:none;background:transparent;border:0;padding:8px;border-radius:8px;cursor:pointer}
+    .menu-toggle svg{display:block}
+    @media(max-width:820px){
+      nav{display:none}
+      .menu-toggle{display:inline-flex}
+    }
+
+    /* Mobile menu */
+    .mobile-menu{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;z-index:100;padding:20px}
+    .mobile-menu .panel{background:#fff;max-width:320px;height:100%;padding:20px;border-radius:12px}
+    .mobile-menu.open{display:block}
+    .mobile-links{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Blog article */
+    article{background:var(--card);padding:22px;border-radius:var(--radius);box-shadow:0 12px 30px rgba(11,17,31,0.04)}
+    .eyebrow{color:var(--muted);font-weight:600;font-size:13px;letter-spacing:0.5px}
+    h1{margin:0;font-size:22px}
+    h2{font-size:20px;margin-top:20px}
+    h3{font-size:16px;margin-top:16px}
+    p{margin:12px 0}
+    ul,ol{margin:10px 0 12px 20px}
+    .grid{display:grid;grid-template-columns:1fr 300px;gap:18px}
+    .card{background:#fbfdff;border-radius:12px;padding:14px;box-shadow:0 8px 20px rgba(11,17,31,0.03)}
+    pre{background:#0b1220;color:#e6f2f2;padding:12px;border-radius:8px;overflow:auto;font-size:13px}
+    code{background:#f3f4f6;padding:2px 6px;border-radius:6px;font-family:monospace}
+    .checklist{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+    .check{display:flex;gap:8px;align-items:flex-start}
+    .cta-btn{display:inline-block;padding:10px 14px;background:#0b1020;color:#fff;border-radius:8px;text-decoration:none;margin-top:12px}
+    footer{margin-top:28px;color:var(--muted);font-size:13px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">NA</div>
+        <div>
+          <h1 style="font-size:16px;margin:0">Noor ul haq Abbasi</h1>
+          <div class="small">Excel VBA • Automation</div>
+        </div>
+      </div>
+      <nav>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#services">Specialisations</a>
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#testimonials">Recommendations</a>
+        <a href="../index.html#contact">Contact</a>
+        <a class="cta" href="../index.html#contact">Hire me</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="#0b1020" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><strong>Noor ul haq Abbasi</strong><div class="small">Excel VBA • Automation</div></div>
+        <button id="menuClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">✕</button>
+      </div>
+      <nav class="mobile-links">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#services">Specialisations</a>
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#blog">Blog</a>
+        <a href="../index.html#testimonials">Recommendations</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- blog content -->
+  <div class="wrap">
+<article>
+
+ 
+     <div class="eyebrow">Guide · Data Collection · Surveys & Research</div>
+<h1>Protecting data quality in surveys</h1>
+<p><em>Checklist and tips for collecting clean, analyzable field data</em></p>
+
+<div class="grid" style="margin-top:18px">
+  <main>
+    <h2>Why data quality matters</h2>
+    <p>Even the most advanced analysis is useless if the raw survey data is biased, inconsistent, or incomplete. Data quality issues multiply in field surveys where multiple enumerators, devices, and environments are involved. Protecting quality means ensuring responses are reliable, consistent, and ready for statistical analysis without excessive cleaning.</p>
+
+    <h2>Core principles</h2>
+    <ol>
+      <li><strong>Clarity:</strong> Questions must be unambiguous and tested before launch.</li>
+      <li><strong>Consistency:</strong> Enumerators should follow identical protocols.</li>
+      <li><strong>Validation:</strong> Each response should be checked against logic and ranges.</li>
+      <li><strong>Documentation:</strong> Keep clear metadata, survey versions, and logs.</li>
+    </ol>
+
+    <h2>Checklist for survey design</h2>
+    <ul>
+      <li>Keep questions short, direct, and free from jargon.</li>
+      <li>Avoid double-barrelled questions (two ideas in one).</li>
+      <li>Use skip logic to avoid irrelevant questions.</li>
+      <li>Balance open vs closed questions: open for depth, closed for analysis.</li>
+      <li>Translate and back-translate questionnaires for multilingual studies.</li>
+    </ul>
+
+    <h2>Enumerator training & monitoring</h2>
+    <p>Field workers are the guardians of data quality. Invest in:</p>
+    <ul>
+      <li>Training sessions with mock interviews.</li>
+      <li>Clear manuals and FAQs accessible on devices.</li>
+      <li>Spot checks and shadowing during fieldwork.</li>
+      <li>Daily debriefs to resolve issues early.</li>
+    </ul>
+
+    <h2>Technical validation in digital tools</h2>
+    <p>Use mobile survey platforms or Excel forms with built-in checks:</p>
+    <ul>
+      <li><strong>Range checks:</strong> e.g., Age must be 18–99.</li>
+      <li><strong>Mandatory fields:</strong> Prevent submission with blanks.</li>
+      <li><strong>Skip logic:</strong> Hide irrelevant sections automatically.</li>
+      <li><strong>GPS & timestamps:</strong> Verify location and timing of responses.</li>
+      <li><strong>Device ID:</strong> Track which enumerator submitted each form.</li>
+    </ul>
+
+    <h2>Data cleaning & monitoring</h2>
+    <p>Even with preventive measures, cleaning is still required:</p>
+    <ul>
+      <li>Check for duplicate records.</li>
+      <li>Run outlier detection (e.g., income 100× higher than median).</li>
+      <li>Cross-validate related questions (household size vs. household members listed).</li>
+      <li>Audit time taken per interview — extremely short durations often mean poor quality.</li>
+    </ul>
+
+    <h2>Audit-ready practices</h2>
+    <p>For projects funded by clients or governments, audits are common. Keep:</p>
+    <ul>
+      <li>A frozen copy of raw data.</li>
+      <li>A processing log (what cleaning and transformations were applied).</li>
+      <li>Version history of questionnaires.</li>
+      <li>Enumerator performance reports.</li>
+    </ul>
+
+    <h2>Handover checklist</h2>
+    <div class="checklist">
+      <div class="check"><input type="checkbox" /> <div>All questionnaires pretested and translated.</div></div>
+      <div class="check"><input type="checkbox" /> <div>Enumerator training completed and logged.</div></div>
+      <div class="check"><input type="checkbox" /> <div>GPS, timestamps, and device IDs enabled.</div></div>
+      <div class="check"><input type="checkbox" /> <div>Raw data securely stored and backed up.</div></div>
+      <div class="check"><input type="checkbox" /> <div>Cleaning log prepared (with outlier rules).</div></div>
+      <div class="check"><input type="checkbox" /> <div>Final dataset labeled and ready for analysis.</div></div>
+    </div>
+
+    <h2>Final tips</h2>
+    <ul>
+      <li>Pilot surveys are essential — 20 test cases reveal most problems.</li>
+      <li>Never rely solely on enumerator honesty — add system checks.</li>
+      <li>Incentivize accuracy, not speed.</li>
+      <li>Document every decision — assumptions today become audit issues tomorrow.</li>
+    </ul>
+
+    <p style="margin-top:18px">Data quality is the foundation of trust in survey research. Protecting it ensures your analysis is credible and decisions are based on reliable evidence.</p>
+  </main>
+
+  <aside>
+    <div class="card">
+      <h3 style="margin-top:0">At-a-glance</h3>
+      <ul class="small">
+        <li><strong>Goal:</strong> Clean, reliable survey data</li>
+        <li><strong>Key methods:</strong> Training, validation, monitoring</li>
+        <li><strong>Outputs:</strong> Audit-ready datasets</li>
+      </ul>
+
+      <h3 style="margin-top:12px">Common checks</h3>
+      <ul class="small">
+        <li>Range limits (e.g. Age 18–99)</li>
+        <li>No duplicate IDs</li>
+        <li>GPS matches assigned area</li>
+      </ul>
+
+      <h3 style="margin-top:12px">Pro tip</h3>
+      <p class="small">Track <strong>interview duration</strong> — too short often means low-quality responses.</p>
+
+      <a class="cta-btn" href="index.html#contact">Discuss survey project</a>
+    </div>
+  </aside>
+</div>
+
+<footer style="margin-top:18px;color:var(--muted);font-size:13px">
+  Published by <strong>Noor ul haq Abbasi</strong>. Get in touch for tailored survey data solutions.
+</footer>
+
+    </article>
+  </div>
+
+  <script>
+    // mobile menu toggle
+    const menu = document.getElementById('mobileMenu');
+    const toggle = document.getElementById('menuToggle');
+    const closeBtn = document.getElementById('menuClose');
+    toggle.addEventListener('click', ()=> menu.classList.add('open'));
+    closeBtn.addEventListener('click', ()=> menu.classList.remove('open'));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
